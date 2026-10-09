@@ -58,48 +58,48 @@ export function FaqSection() {
   };
 
   return (
-    <div className="w-full rounded-2xl border border-slate-800 bg-slate-900/80 backdrop-blur-md p-6 shadow-2xl">
-      <div className="flex items-center gap-3 pb-6 border-b border-slate-800/80">
-        <div className="p-2 rounded-xl bg-slate-800 border border-slate-700 text-cyan-400">
-          <HelpCircle className="w-5 h-5" />
+    <div className="w-full rounded-xl border border-white/[0.08] bg-zinc-900/40 backdrop-blur-md p-6 shadow-2xl transition-all">
+      <div className="flex items-center gap-3 pb-5 border-b border-white/[0.06]">
+        <div className="p-2 rounded-lg bg-zinc-800/60 border border-white/[0.08] text-violet-400">
+          <HelpCircle className="w-4 h-4" />
         </div>
         <div>
-          <h2 className="text-lg font-bold text-white">Frequently Asked Questions</h2>
-          <p className="text-xs text-slate-400">
-            Developer reference guide on LLM tokenization, economics, and context engineering
+          <h2 className="text-base font-semibold text-zinc-100">Engineering Reference & FAQ</h2>
+          <p className="text-xs text-zinc-500 font-mono">
+            Technical notes on tokenization, model economics, and context utilization
           </p>
         </div>
       </div>
 
-      <div className="divide-y divide-slate-800/60 mt-2">
+      <div className="divide-y divide-white/[0.04] mt-1">
         {FAQS.map((faq, index) => {
           const isOpen = openIndices.includes(index);
           return (
-            <div key={faq.question} className="py-4">
+            <div key={faq.question} className="py-3.5">
               <button
                 type="button"
                 onClick={() => toggleIndex(index)}
                 className="w-full flex items-center justify-between text-left gap-4 group focus:outline-none"
               >
                 <div className="flex items-center gap-2.5">
-                  <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-cyan-400">
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700/50">
                     {faq.category}
                   </span>
-                  <span className="text-sm font-semibold text-slate-100 group-hover:text-cyan-300 transition">
+                  <span className="text-xs sm:text-sm font-medium text-zinc-200 group-hover:text-violet-300 transition">
                     {faq.question}
                   </span>
                 </div>
                 <div
-                  className={`p-1 rounded-lg text-slate-400 group-hover:text-white transition-transform duration-200 ${
-                    isOpen ? 'rotate-180 bg-slate-800' : ''
+                  className={`p-1 rounded-lg text-zinc-500 group-hover:text-zinc-200 transition-transform duration-200 ${
+                    isOpen ? 'rotate-180 bg-zinc-800/60' : ''
                   }`}
                 >
-                  <ChevronDown className="w-4 h-4" />
+                  <ChevronDown className="w-3.5 h-3.5" />
                 </div>
               </button>
 
               {isOpen && (
-                <div className="mt-3 pl-2 pr-4 text-xs text-slate-300 leading-relaxed font-sans animate-in fade-in duration-200">
+                <div className="mt-2.5 pl-2 pr-4 text-xs text-zinc-400 leading-relaxed font-sans animate-in fade-in duration-200">
                   <p>{faq.answer}</p>
                 </div>
               )}

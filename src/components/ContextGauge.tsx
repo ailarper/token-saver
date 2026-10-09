@@ -31,56 +31,61 @@ export function ContextGauge({
   // Status calculation
   let statusColor = 'text-emerald-400';
   let barGradient = 'from-emerald-500 to-teal-400';
-  let glowColor = 'shadow-[0_0_15px_rgba(16,185,129,0.25)]';
+  let glowColor = 'shadow-[0_0_12px_rgba(16,185,129,0.3)]';
   let statusBadge = {
-    label: 'Safe Headroom',
+    label: 'Headroom Safe',
     icon: CheckCircle2,
-    badgeClass: 'bg-emerald-950/60 border-emerald-500/30 text-emerald-300',
+    badgeClass: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
   };
 
   if (isInputExceeded || isTotalExceeded || inputPercentage >= 80) {
     statusColor = 'text-rose-400';
     barGradient = 'from-rose-500 to-red-600';
-    glowColor = 'shadow-[0_0_15px_rgba(244,63,94,0.35)]';
+    glowColor = 'shadow-[0_0_12px_rgba(244,63,94,0.35)]';
     statusBadge = {
-      label: isTotalExceeded ? 'Exceeds Context Window' : 'Truncation Danger (>80%)',
+      label: isTotalExceeded ? 'Exceeds Window' : 'Danger (>80%)',
       icon: ShieldAlert,
-      badgeClass: 'bg-rose-950/60 border-rose-500/30 text-rose-300',
+      badgeClass: 'bg-rose-500/10 border-rose-500/20 text-rose-400',
     };
   } else if (inputPercentage >= 50) {
     statusColor = 'text-amber-400';
     barGradient = 'from-amber-500 to-yellow-500';
-    glowColor = 'shadow-[0_0_15px_rgba(245,158,11,0.25)]';
+    glowColor = 'shadow-[0_0_12px_rgba(245,158,11,0.25)]';
     statusBadge = {
-      label: 'Warning (50% - 80%)',
+      label: 'Warning (50-80%)',
       icon: AlertTriangle,
-      badgeClass: 'bg-amber-950/60 border-amber-500/30 text-amber-300',
+      badgeClass: 'bg-amber-500/10 border-amber-500/20 text-amber-400',
     };
   }
 
   const StatusIcon = statusBadge.icon;
 
   return (
-    <div className="w-full rounded-2xl border border-slate-800 bg-slate-900/80 backdrop-blur-md p-5 shadow-xl transition-all">
+    <div className="w-full rounded-xl border border-white/[0.08] bg-zinc-900/40 backdrop-blur-md p-5 shadow-xl transition-all">
       {/* Header with Model Selector */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-slate-800/80">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.06]">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-slate-800 border border-slate-700/80 text-cyan-400 shadow-inner">
-            <Cpu className="w-5 h-5" />
+          <div className="p-2 rounded-lg bg-zinc-800/60 border border-white/[0.08] text-violet-400 shadow-inner">
+            <Cpu className="w-4 h-4" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs uppercase font-mono tracking-wider text-slate-400">
-                Active Context Benchmark
+              <span className="text-[10px] uppercase font-mono tracking-wider text-zinc-500">
+                Context Benchmark
               </span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 font-mono">
+              <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-zinc-800 text-zinc-300 border border-zinc-700/50">
                 {selectedModel.provider}
               </span>
+              {selectedModel.benchmarkScore !== undefined && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full font-mono bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  AA {selectedModel.benchmarkScore}
+                </span>
+              )}
             </div>
-            <h3 className="text-base font-semibold text-white flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-zinc-100 flex items-center gap-2 mt-0.5">
               {selectedModel.name}
-              <span className="text-xs font-normal text-slate-400 font-mono">
-                ({formatTokenCount(maxContext)} max context)
+              <span className="text-xs font-normal text-zinc-500 font-mono tabular-nums">
+                ({formatTokenCount(maxContext)} max)
               </span>
             </h3>
           </div>
@@ -94,7 +99,7 @@ export function ContextGauge({
               const target = allModels.find((m) => m.id === e.target.value);
               if (target) onSelectModel(target);
             }}
-            className="bg-slate-950 border border-slate-700 text-slate-200 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+            className="bg-black/40 border border-white/[0.08] text-zinc-200 text-xs font-mono rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-violet-500/50"
           >
             {allModels.map((m) => (
               <option key={m.id} value={m.id}>
@@ -104,32 +109,32 @@ export function ContextGauge({
           </select>
 
           <div
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-medium ${statusBadge.badgeClass}`}
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-mono font-medium ${statusBadge.badgeClass}`}
           >
             <StatusIcon className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">{statusBadge.label}</span>
+            <span className="hidden sm:inline">{statusBadge.label}</span>
           </div>
         </div>
       </div>
 
       {/* Progress Gauge Bar */}
-      <div className="mt-5 space-y-2">
+      <div className="mt-4 space-y-2">
         <div className="flex justify-between items-baseline text-xs font-mono">
-          <span className="text-slate-400">
+          <span className="text-zinc-400">
             Utilization:{' '}
-            <strong className={`font-semibold ${statusColor}`}>
+            <strong className={`font-semibold tabular-nums ${statusColor}`}>
               {inputPercentage.toFixed(1)}%
             </strong>{' '}
-            (Prompt) + <span className="text-slate-300">{outputPercentage.toFixed(1)}% (Output)</span>
+            <span className="text-zinc-500">(Prompt)</span> +{' '}
+            <span className="text-zinc-400 tabular-nums">{outputPercentage.toFixed(1)}% (Output)</span>
           </span>
-          <span className="text-slate-400">
-            Total Cap:{' '}
-            <strong className="text-white">{formatTokenCount(maxContext)} tokens</strong>
+          <span className="text-zinc-400">
+            Cap: <strong className="text-zinc-100 tabular-nums">{formatTokenCount(maxContext)} tokens</strong>
           </span>
         </div>
 
-        {/* Multi-segment Progress Bar */}
-        <div className="h-4 w-full rounded-full bg-slate-950 border border-slate-800 p-0.5 overflow-hidden flex relative shadow-inner">
+        {/* Multi-segment Progress Bar with Precision Guides */}
+        <div className="h-3.5 w-full rounded-full bg-black/60 border border-white/[0.06] p-0.5 overflow-hidden flex relative shadow-inner">
           {/* Input tokens segment */}
           <div
             style={{ width: `${Math.min(100, inputPercentage)}%` }}
@@ -138,32 +143,32 @@ export function ContextGauge({
           {/* Output tokens projected segment */}
           <div
             style={{ width: `${Math.min(100 - Math.min(100, inputPercentage), outputPercentage)}%` }}
-            className="h-full bg-cyan-600/70 opacity-80 border-l border-slate-900 transition-all duration-300"
+            className="h-full bg-violet-600/70 opacity-80 border-l border-black/40 transition-all duration-300"
             title={`Projected Output: ${outputTokens.toLocaleString()} tokens`}
           />
 
-          {/* 50% & 80% guide notches */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-slate-700/60 pointer-events-none" />
+          {/* 50% & 80% tick notch markers */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/20 pointer-events-none" />
           <div className="absolute left-[80%] top-0 bottom-0 w-[1px] bg-rose-500/40 pointer-events-none" />
         </div>
 
         {/* Legend & Remaining Headroom */}
         <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
-          <div className="flex items-center gap-4 text-slate-400 text-[11px] font-mono">
+          <div className="flex items-center gap-4 text-zinc-400 text-[11px] font-mono">
             <span className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" />
-              Prompt ({inputTokens.toLocaleString()} tokens)
+              <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
+              Prompt (<span className="tabular-nums">{inputTokens.toLocaleString()}</span>)
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-600 inline-block" />
-              Estimated Output ({outputTokens.toLocaleString()} tokens)
+              <span className="w-2 h-2 rounded-full bg-violet-500 inline-block" />
+              Output (<span className="tabular-nums">{outputTokens.toLocaleString()}</span>)
             </span>
           </div>
 
           <div className="font-mono text-xs">
-            <span className="text-slate-400">Remaining Headroom: </span>
+            <span className="text-zinc-500">Remaining Headroom: </span>
             <span
-              className={`font-semibold ${
+              className={`font-semibold tabular-nums ${
                 remainingTokens === 0 ? 'text-rose-400' : 'text-emerald-400'
               }`}
             >
@@ -175,15 +180,14 @@ export function ContextGauge({
 
       {/* Overflow warning banner if exceeded */}
       {isInputExceeded && (
-        <div className="mt-4 p-3 rounded-xl bg-rose-950/60 border border-rose-500/50 flex items-start gap-3 text-rose-200 text-xs">
-          <ShieldAlert className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+        <div className="mt-4 p-3 rounded-xl bg-rose-950/40 border border-rose-500/30 flex items-start gap-3 text-rose-300 text-xs">
+          <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
           <div>
-            <p className="font-semibold text-rose-100">
-              Context Window Truncation Guaranteed!
+            <p className="font-semibold text-rose-200">
+              Context Limit Exceeded
             </p>
-            <p className="text-rose-300/90 mt-0.5">
-              Your prompt has {inputTokens.toLocaleString()} tokens, exceeding {selectedModel.name}&apos;s limit of {maxContext.toLocaleString()} tokens. 
-              The provider will reject the request or truncate critical instructions. Consider switching to a 1M-token context model like Claude Opus 5.5, Claude Sonnet 5.5, Gemini 4 Argon, or DeepSeek V4.1 Flash.
+            <p className="text-rose-300/80 mt-0.5 font-mono text-[11px]">
+              Prompt uses <span className="tabular-nums">{inputTokens.toLocaleString()}</span> tokens, exceeding {selectedModel.name}&apos;s limit of <span className="tabular-nums">{maxContext.toLocaleString()}</span> tokens.
             </p>
           </div>
         </div>

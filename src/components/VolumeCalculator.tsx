@@ -75,19 +75,19 @@ ${sortedForecasts
   };
 
   return (
-    <div className="w-full rounded-2xl border border-slate-800 bg-slate-900/80 backdrop-blur-md p-5 shadow-2xl">
+    <div className="w-full rounded-xl border border-white/[0.08] bg-zinc-900/40 backdrop-blur-md p-5 shadow-2xl transition-all">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.06]">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-slate-800 border border-slate-700 text-cyan-400">
-            <Calculator className="w-5 h-5" />
+          <div className="p-2 rounded-lg bg-zinc-800/60 border border-white/[0.08] text-violet-400">
+            <Calculator className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <h2 className="text-base font-semibold text-zinc-100 flex items-center gap-2">
               Monthly Scale & Production Volume Forecaster
             </h2>
-            <p className="text-xs text-slate-400">
-              Simulate enterprise workload expenses across Daily, Monthly, and Annual horizons
+            <p className="text-xs text-zinc-500 font-mono">
+              Simulate cloud API burn across Daily, Monthly, and Annual run-rates
             </p>
           </div>
         </div>
@@ -95,16 +95,16 @@ ${sortedForecasts
         <button
           type="button"
           onClick={handleCopySummary}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700 text-xs font-semibold text-slate-200 transition active:scale-95 shadow-sm"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800/60 hover:bg-zinc-750 border border-white/[0.08] text-xs font-mono text-zinc-300 hover:text-white transition active:scale-95 shadow-sm"
         >
           {copied ? (
             <>
-              <Check className="w-4 h-4 text-emerald-400" />
-              <span className="text-emerald-300">Copied Markdown!</span>
+              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-emerald-400">Copied Markdown</span>
             </>
           ) : (
             <>
-              <Copy className="w-4 h-4 text-slate-400" />
+              <Copy className="w-3.5 h-3.5 text-zinc-400" />
               <span>Copy Forecast</span>
             </>
           )}
@@ -112,13 +112,13 @@ ${sortedForecasts
       </div>
 
       {/* Sliders & Interactive Controls */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-5 border-b border-slate-800/80">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4 border-b border-white/[0.06]">
         {/* Daily API Calls Slider */}
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Daily API Calls</span>
+            <label className="text-xs font-mono text-zinc-300 flex items-center gap-1.5">
+              <Clock className="w-3 h-3 text-violet-400" />
+              <span>Daily API Calls:</span>
             </label>
             <div className="flex items-center gap-1">
               <input
@@ -128,9 +128,9 @@ ${sortedForecasts
                 step="100"
                 value={dailyCalls}
                 onChange={(e) => setDailyCalls(Math.max(1, Number(e.target.value)))}
-                className="w-24 px-2 py-1 rounded bg-slate-950 border border-slate-700 text-right font-mono text-xs text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                className="w-24 px-2 py-0.5 rounded bg-black/40 border border-white/[0.08] text-right font-mono tabular-nums text-xs text-zinc-100 focus:outline-none focus:ring-1 focus:ring-violet-500/50"
               />
-              <span className="text-xs text-slate-400 font-mono">reqs/day</span>
+              <span className="text-xs text-zinc-500 font-mono">req/d</span>
             </div>
           </div>
 
@@ -141,21 +141,21 @@ ${sortedForecasts
             step="100"
             value={dailyCalls}
             onChange={(e) => setDailyCalls(Number(e.target.value))}
-            className="w-full accent-cyan-500 cursor-pointer"
+            className="w-full cursor-pointer"
           />
 
           {/* Quick preset buttons */}
-          <div className="flex flex-wrap items-center gap-1.5 pt-1">
-            <span className="text-[10px] text-slate-500 font-mono uppercase">Presets:</span>
+          <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+            <span className="text-[10px] text-zinc-500 font-mono uppercase">Presets:</span>
             {CALL_PRESETS.map((preset) => (
               <button
                 key={preset}
                 type="button"
                 onClick={() => setDailyCalls(preset)}
-                className={`px-2 py-0.5 rounded text-[11px] font-mono transition ${
+                className={`px-2 py-0.5 rounded text-[11px] font-mono transition tabular-nums ${
                   dailyCalls === preset
-                    ? 'bg-cyan-950 text-cyan-300 border border-cyan-500/40'
-                    : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-800'
+                    ? 'bg-violet-950/60 text-violet-300 border border-violet-500/40'
+                    : 'bg-zinc-800/40 text-zinc-400 hover:text-zinc-200 border border-white/[0.06]'
                 }`}
               >
                 {preset >= 1000 ? `${preset / 1000}k` : preset}
@@ -165,11 +165,11 @@ ${sortedForecasts
         </div>
 
         {/* Avg Output Tokens Slider */}
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-medium text-slate-300 flex items-center gap-1.5">
-              <Sliders className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Average Output Tokens per Call</span>
+            <label className="text-xs font-mono text-zinc-300 flex items-center gap-1.5">
+              <Sliders className="w-3 h-3 text-violet-400" />
+              <span>Average Output Tokens:</span>
             </label>
             <div className="flex items-center gap-1">
               <input
@@ -179,9 +179,9 @@ ${sortedForecasts
                 step="50"
                 value={avgOutputTokens}
                 onChange={(e) => setAvgOutputTokens(Math.max(50, Number(e.target.value)))}
-                className="w-20 px-2 py-1 rounded bg-slate-950 border border-slate-700 text-right font-mono text-xs text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                className="w-20 px-2 py-0.5 rounded bg-black/40 border border-white/[0.08] text-right font-mono tabular-nums text-xs text-zinc-100 focus:outline-none focus:ring-1 focus:ring-violet-500/50"
               />
-              <span className="text-xs text-slate-400 font-mono">tokens</span>
+              <span className="text-xs text-zinc-500 font-mono">tokens</span>
             </div>
           </div>
 
@@ -192,51 +192,51 @@ ${sortedForecasts
             step="50"
             value={avgOutputTokens}
             onChange={(e) => setAvgOutputTokens(Number(e.target.value))}
-            className="w-full accent-cyan-500 cursor-pointer"
+            className="w-full cursor-pointer"
           />
 
-          <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono pt-1">
-            <span>Input: {inputTokensPerCall.toLocaleString()} tokens/req</span>
-            <span>Output: {avgOutputTokens.toLocaleString()} tokens/req</span>
+          <div className="flex items-center justify-between text-[11px] text-zinc-500 font-mono pt-0.5">
+            <span>Input: <strong className="tabular-nums text-zinc-400">{inputTokensPerCall.toLocaleString()}</strong> tok/call</span>
+            <span>Output: <strong className="tabular-nums text-zinc-400">{avgOutputTokens.toLocaleString()}</strong> tok/call</span>
           </div>
         </div>
       </div>
 
-      {/* Monthly Volume Stats Banner */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
-        <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
-          <span className="text-[10px] text-slate-400 uppercase font-mono tracking-wider">
+      {/* Monthly Volume Stats Banner in Raycast Card Style */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
+        <div className="p-3 rounded-lg bg-black/40 border border-white/[0.06]">
+          <span className="text-[10px] text-zinc-500 uppercase font-mono tracking-wider">
             Monthly Ingestion (Prompt)
           </span>
-          <div className="text-base font-bold text-slate-200 font-mono mt-1">
+          <div className="text-sm sm:text-base font-semibold text-zinc-200 font-mono tabular-nums mt-0.5">
             {formatTokenCount(monthlyInputTotal)} tokens
           </div>
-          <span className="text-[11px] text-slate-500">
-            {(dailyCalls * 30).toLocaleString()} total requests/mo
+          <span className="text-[11px] text-zinc-500 font-mono tabular-nums">
+            {(dailyCalls * 30).toLocaleString()} reqs/mo
           </span>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
-          <span className="text-[10px] text-slate-400 uppercase font-mono tracking-wider">
+        <div className="p-3 rounded-lg bg-black/40 border border-white/[0.06]">
+          <span className="text-[10px] text-zinc-500 uppercase font-mono tracking-wider">
             Monthly Generation (Output)
           </span>
-          <div className="text-base font-bold text-cyan-300 font-mono mt-1">
+          <div className="text-sm sm:text-base font-semibold text-violet-300 font-mono tabular-nums mt-0.5">
             {formatTokenCount(monthlyOutputTotal)} tokens
           </div>
-          <span className="text-[11px] text-slate-500">
+          <span className="text-[11px] text-zinc-500 font-mono tabular-nums">
             Avg {avgOutputTokens} tokens/completion
           </span>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/30">
+        <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
           <span className="text-[10px] text-emerald-400 uppercase font-mono tracking-wider flex items-center gap-1">
             <TrendingDown className="w-3 h-3" />
-            Max Monthly Arbitrage Spread
+            Monthly Spread Potential
           </span>
-          <div className="text-base font-bold text-emerald-300 font-mono mt-1">
+          <div className="text-sm sm:text-base font-semibold text-emerald-400 font-mono tabular-nums mt-0.5">
             Save {formatCurrency(monthlySavingsPotential)} / mo
           </div>
-          <span className="text-[11px] text-emerald-400/80">
+          <span className="text-[11px] text-emerald-400/80 font-mono line-clamp-1">
             Cheapest ({cheapest?.model.name}) vs Premium ({mostExpensive?.model.name})
           </span>
         </div>
@@ -246,48 +246,48 @@ ${sortedForecasts
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400 uppercase font-mono text-[11px] tracking-wider">
-              <th className="py-3 px-3">Model</th>
-              <th className="py-3 px-3">Provider</th>
-              <th className="py-3 px-3">Daily Burn</th>
-              <th className="py-3 px-3">Monthly Bill (30 Days)</th>
-              <th className="py-3 px-3 text-right">Annual Run-Rate (365 Days)</th>
+            <tr className="border-b border-white/[0.06] text-zinc-500 uppercase font-mono text-[11px] tracking-wider">
+              <th className="py-2.5 px-3">Model</th>
+              <th className="py-2.5 px-3">Provider</th>
+              <th className="py-2.5 px-3">Daily Burn</th>
+              <th className="py-2.5 px-3">Monthly Bill (30 Days)</th>
+              <th className="py-2.5 px-3 text-right">Annual Run-Rate (365 Days)</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/40 font-mono">
+          <tbody className="divide-y divide-white/[0.04] font-mono">
             {sortedForecasts.map((f, index) => {
               const isCheapest = index === 0;
               return (
                 <tr
                   key={f.model.id}
-                  className={`hover:bg-slate-850/50 transition-colors ${
-                    isCheapest ? 'bg-emerald-950/20' : ''
+                  className={`hover:bg-zinc-850/40 transition-colors ${
+                    isCheapest ? 'bg-emerald-500/5' : ''
                   }`}
                 >
-                  <td className="py-3 px-3 font-sans">
+                  <td className="py-2.5 px-3 font-sans">
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-slate-100">{f.model.name}</span>
+                      <span className="font-medium text-xs sm:text-sm text-zinc-200">{f.model.name}</span>
                       {isCheapest && (
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-500/30 text-[10px] font-bold text-emerald-300 uppercase">
+                        <span className="px-1.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-mono font-bold text-emerald-400 uppercase">
                           Lowest Cost
                         </span>
                       )}
                     </div>
                   </td>
-                  <td className="py-3 px-3 text-slate-300 font-sans">
-                    <span className="px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-[11px]">
+                  <td className="py-2.5 px-3 text-zinc-400 font-sans">
+                    <span className="px-2 py-0.5 rounded-full bg-zinc-800/80 text-zinc-300 border border-zinc-700/50 text-[10px] font-mono">
                       {f.model.provider}
                     </span>
                   </td>
-                  <td className="py-3 px-3 text-slate-300">
+                  <td className="py-2.5 px-3 tabular-nums text-zinc-300">
                     {formatCurrency(f.dailyCost)}
                   </td>
-                  <td className="py-3 px-3 font-bold text-slate-100">
-                    <span className={isCheapest ? 'text-emerald-300' : 'text-slate-100'}>
+                  <td className="py-2.5 px-3 tabular-nums font-semibold text-zinc-100">
+                    <span className={isCheapest ? 'text-emerald-400' : 'text-zinc-100'}>
                       {formatCurrency(f.monthlyCost)}
                     </span>
                   </td>
-                  <td className="py-3 px-3 text-right font-bold text-slate-200">
+                  <td className="py-2.5 px-3 tabular-nums text-right font-semibold text-zinc-200">
                     {formatCurrency(f.annualCost)}
                   </td>
                 </tr>
