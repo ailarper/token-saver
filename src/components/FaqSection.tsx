@@ -26,13 +26,13 @@ export const FAQS: FaqItem[] = [
     question: 'Which AI model currently has the cheapest API?',
     category: 'Pricing',
     answer:
-      'As of current foundation model pricing, Gemini 2.0 Flash ($0.10/1M input, $0.40/1M output), DeepSeek-V3 ($0.14/1M input, $0.28/1M output), and GPT-4o mini ($0.15/1M input, $0.60/1M output) are the market price leaders. For high-throughput classification, routing, or summary pipelines, these models reduce operational expenses by over 90% compared to frontier models like Claude 3.7 Sonnet ($3.00/1M input) or OpenAI o1 ($15.00/1M input).',
+      'On the Artificial Analysis leaderboard, DeepSeek V4.1 Flash ($0.30/1M input, $1.20/1M output) and MiMo-V2.6-Pro ($0.43/1M input, $0.87/1M output) are premier open-weights price-to-performance leaders in the reasoning category. For high-volume pipelines, they achieve dramatic cost reductions compared to high-end frontier models like Claude Opus 5.5 ($4.00/1M input) or GPT-6 Astra ($10.00/1M input).',
   },
   {
     question: 'How does context window size affect LLM performance and costs?',
     category: 'Architecture',
     answer:
-      'A model’s context window defines the maximum number of cumulative tokens (prompt input + generated output) that can be processed in a single inference call. While models like Gemini 1.5 Pro support up to 2,000,000 tokens and Gemini 2.0 Flash supports 1,048,576 tokens, larger contexts incur higher latency and higher per-call input costs. Furthermore, many models experience "lost in the middle" attention degradation when processing hundreds of thousands of tokens without structured retrieval.',
+      'A model’s context window defines the maximum number of cumulative tokens (prompt input + generated output) that can be processed in a single inference call. Frontier models like Claude Opus 5.5, Claude Sonnet 5.5, Gemini 4 Argon, and Kimi K3 now support 1,000,000+ token context windows. Larger contexts allow processing whole codebases or technical documents, but incur higher per-call input costs.',
   },
   {
     question: 'Is my prompt data private when using TokenSaver?',

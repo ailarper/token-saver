@@ -1,4 +1,14 @@
-export type Provider = 'OpenAI' | 'Anthropic' | 'Google' | 'DeepSeek' | 'Custom';
+export type Provider =
+  | 'Anthropic'
+  | 'OpenAI'
+  | 'Google'
+  | 'xAI'
+  | 'Xiaomi'
+  | 'Alibaba'
+  | 'Zhipu'
+  | 'Moonshot'
+  | 'DeepSeek'
+  | 'Custom';
 
 export type ModelCategory = 'Reasoning' | 'Flagship' | 'Fast / Budget';
 
@@ -10,6 +20,7 @@ export interface ModelConfig {
   outputCostPerMillion: number; // USD per 1M output tokens
   contextWindow: number; // Maximum context tokens
   category: ModelCategory;
+  benchmarkScore?: number; // Artificial Analysis Intelligence Index
   isCustom?: boolean;
   description?: string;
   badge?: string;

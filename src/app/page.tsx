@@ -29,7 +29,9 @@ export default function Home() {
   const [promptText, setPromptText] = useState<string>(
     PROMPT_PRESETS[0]?.content || ''
   );
-  const [selectedModelId, setSelectedModelId] = useState<string>('gpt-4o');
+  const [selectedModelId, setSelectedModelId] = useState<string>(
+    () => DEFAULT_MODELS[0]?.id || 'claude-opus-5-5-max'
+  );
   const [outputTokens, setOutputTokens] = useState<number>(500);
   const [isCustomModalOpen, setIsCustomModalOpen] = useState<boolean>(false);
 

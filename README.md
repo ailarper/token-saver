@@ -26,20 +26,19 @@
 
 ## 🤖 Supported Default Models
 
-| Provider | Model | Context Window | Input / 1M | Output / 1M | Category |
-|---|---|---|---|---|---|
-| **OpenAI** | GPT-4o | 128,000 | $2.50 | $10.00 | Flagship |
-| **OpenAI** | GPT-4o mini | 128,000 | $0.15 | $0.60 | Fast / Budget |
-| **OpenAI** | o1 | 200,000 | $15.00 | $60.00 | Reasoning |
-| **OpenAI** | o3-mini | 200,000 | $1.10 | $4.40 | Reasoning |
-| **Anthropic** | Claude 3.7 Sonnet | 200,000 | $3.00 | $15.00 | Flagship |
-| **Anthropic** | Claude 3.5 Sonnet | 200,000 | $3.00 | $15.00 | Flagship |
-| **Anthropic** | Claude 3.5 Haiku | 200,000 | $0.80 | $4.00 | Fast / Budget |
-| **Google** | Gemini 2.0 Flash | 1,048,576 | $0.10 | $0.40 | Fast / Budget |
-| **Google** | Gemini 1.5 Pro | 2,097,152 | $1.25 | $5.00 | Flagship |
-| **DeepSeek** | DeepSeek-R1 | 128,000 | $0.55 | $2.19 | Reasoning |
-| **DeepSeek** | DeepSeek-V3 | 128,000 | $0.14 | $0.28 | Fast / Budget |
-| **Custom** | *User Defined* | Custom | Custom | Custom | User Choice |
+| Provider | Model | Context Window | Input / 1M | Output / 1M | Category | AA Index |
+|---|---|---:|---:|---:|---|---:|
+| **Anthropic** | Claude Opus 5.5 (Max, default fallback) | 1,000,000 | $4.00 | $20.00 | Flagship | 58 |
+| **Anthropic** | Claude Sonnet 5.5 (Max, default fallback) | 1,000,000 | $2.00 | $10.00 | Flagship | 56 |
+| **OpenAI** | GPT-6 Astra (Max) | 1,000,000 | $10.00 | $50.00 | Flagship | 53 |
+| **Google** | Gemini 4 Argon (High) | 1,000,000 | $2.00 | $10.00 | Flagship | 53 |
+| **xAI** | Grok 4.7 (Xhigh) | 500,000 | $2.00 | $6.00 | Flagship | 46 |
+| **Xiaomi** | MiMo-V2.6-Pro (reasoning) | 1,000,000 | $0.43 | $0.87 | Reasoning | 46 |
+| **Alibaba** | Qwen3.8 Max (0902) | 984,000 | $2.00 | $6.00 | Reasoning | 45 |
+| **Zhipu** | GLM-5.3 (Max) | 1,000,000 | $1.40 | $4.40 | Reasoning | 45 |
+| **Moonshot** | Kimi K3 (Max) | 1,049,000 | $3.00 | $15.00 | Reasoning | 44 |
+| **DeepSeek** | DeepSeek V4.1 Flash (Max) | 1,000,000 | $0.30 | $1.20 | Reasoning | 39 |
+| **Custom** | *User Defined* | Custom | Custom | Custom | User Choice | — |
 
 ---
 

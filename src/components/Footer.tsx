@@ -31,12 +31,12 @@ export function Footer() {
             <h4 className="font-semibold text-slate-200 text-xs uppercase tracking-wider mb-3">
               Supported Ecosystem
             </h4>
-            <ul className="space-y-2 text-slate-400">
-              <li>OpenAI (GPT-4o, o1, o3-mini)</li>
-              <li>Anthropic (Claude 3.7 & 3.5 Sonnet)</li>
-              <li>Google (Gemini 2.0 Flash, 1.5 Pro)</li>
-              <li>DeepSeek (DeepSeek-R1, V3)</li>
-              <li>Local & Custom Models (LocalStorage)</li>
+            <ul className="space-y-1.5 text-slate-400">
+              <li>Anthropic (Claude Opus & Sonnet 5.5)</li>
+              <li>OpenAI (GPT-6 Astra)</li>
+              <li>Google DeepMind (Gemini 4 Argon)</li>
+              <li>xAI, Xiaomi, Alibaba, Zhipu, Moonshot</li>
+              <li>DeepSeek (V4.1 Flash) & LocalStorage</li>
             </ul>
           </div>
 

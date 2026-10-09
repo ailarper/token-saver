@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ModelConfig, Provider } from '@/types/model';
 import { calculateModelCosts, formatCurrency, formatTokenCount } from '@/lib/calculator';
 import { deleteCustomModel } from '@/lib/storage';
@@ -13,6 +13,7 @@ import {
   ArrowUpDown,
   TrendingDown,
   Info,
+  Award,
 } from 'lucide-react';
 
 interface CostMatrixProps {
@@ -38,8 +39,25 @@ export function CostMatrix({
 }: CostMatrixProps) {
   const [providerFilter, setProviderFilter] = useState<string>('All');
   const [categoryFilter, setCategoryFilter] = useState<string>('All');
-  const [sortBy, setSortBy] = useState<'total' | 'input' | 'output' | 'context'>('total');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortBy, setSortBy] = useState<'total' | 'input' | 'output' | 'context' | 'score'>('score');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
+  // Dynamically compute available providers from all active models
+  const availableProviders = useMemo(() => {
+    const list: (Provider | 'All')[] = ['All'];
+    const seen = new Set<string>();
+    for (const m of allModels) {
+      if (m.isCustom) {
+        seen.add('Custom');
+      } else if (m.provider) {
+        seen.add(m.provider);
+      }
+    }
+    for (const p of seen) {
+      list.push(p as Provider);
+    }
+    return list;
+  }, [allModels]);
 
   // Filter models
   const filteredModels = allModels.filter((model) => {
@@ -67,6 +85,8 @@ export function CostMatrix({
       diff = a.model.outputCostPerMillion - b.model.outputCostPerMillion;
     } else if (sortBy === 'context') {
       diff = a.model.contextWindow - b.model.contextWindow;
+    } else if (sortBy === 'score') {
+      diff = (a.model.benchmarkScore || 0) - (b.model.benchmarkScore || 0);
     }
     return sortOrder === 'asc' ? diff : -diff;
   });
@@ -79,16 +99,7 @@ export function CostMatrix({
     }
   };
 
-  const providers: (Provider | 'All')[] = [
-    'All',
-    'OpenAI',
-    'Anthropic',
-    'Google',
-    'DeepSeek',
-    'Custom',
-  ];
-
-  const categories = ['All', 'Reasoning', 'Flagship', 'Fast / Budget'];
+  const categories = ['All', 'Flagship', 'Reasoning', 'Fast / Budget'];
 
   return (
     <div className="w-full rounded-2xl border border-slate-800 bg-slate-900/80 backdrop-blur-md p-5 shadow-2xl">
@@ -141,27 +152,29 @@ export function CostMatrix({
       </div>
 
       {/* Filter and Sort Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 py-4 border-b border-slate-800/60">
-        {/* Provider Filters */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          {providers.map((p) => (
-            <button
-              key={p}
-              type="button"
-              onClick={() => setProviderFilter(p)}
-              className={`px-3 py-1 rounded-lg text-xs font-medium transition ${
-                providerFilter === p
-                  ? 'bg-cyan-950 text-cyan-300 border border-cyan-500/40 shadow-sm'
-                  : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-800/80 hover:bg-slate-850'
-              }`}
-            >
-              {p}
-            </button>
-          ))}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-4 border-b border-slate-800/60">
+        {/* Dynamic Provider Filters with Horizontal Scroll on Mobile */}
+        <div className="w-full sm:w-auto overflow-x-auto pb-1 scrollbar-none sm:scrollbar-thin">
+          <div className="flex items-center gap-1.5 min-w-max">
+            {availableProviders.map((p) => (
+              <button
+                key={p}
+                type="button"
+                onClick={() => setProviderFilter(p)}
+                className={`px-3 py-1 rounded-lg text-xs font-medium transition whitespace-nowrap shrink-0 ${
+                  providerFilter === p
+                    ? 'bg-cyan-950 text-cyan-300 border border-cyan-500/40 shadow-sm'
+                    : 'bg-slate-950 text-slate-400 hover:text-slate-200 border border-slate-800/80 hover:bg-slate-850'
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5 shrink-0">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -186,6 +199,20 @@ export function CostMatrix({
             <tr className="border-b border-slate-800 text-slate-400 uppercase font-mono text-[11px] tracking-wider">
               <th className="py-3 px-3">Model</th>
               <th className="py-3 px-3">Provider</th>
+              <th
+                className="py-3 px-3 cursor-pointer hover:text-cyan-300 transition"
+                onClick={() => {
+                  setSortBy('score');
+                  setSortOrder(sortOrder === 'desc' ? 'asc' : 'desc');
+                }}
+                title="Sort by Artificial Analysis Intelligence Index"
+              >
+                <div className="flex items-center gap-1">
+                  <Award className="w-3.5 h-3.5 text-amber-400" />
+                  <span>AA Index</span>
+                  <ArrowUpDown className="w-3 h-3" />
+                </div>
+              </th>
               <th
                 className="py-3 px-3 cursor-pointer hover:text-cyan-300 transition"
                 onClick={() => {
@@ -288,6 +315,17 @@ export function CostMatrix({
                     </span>
                   </td>
 
+                  {/* Benchmark Quality Score (AA Index) */}
+                  <td className="py-3.5 px-3 font-mono">
+                    {b.model.benchmarkScore !== undefined ? (
+                      <span className="px-2 py-0.5 rounded-md bg-amber-950/50 border border-amber-500/30 text-[11px] font-bold text-amber-300 shadow-sm">
+                        {b.model.benchmarkScore}
+                      </span>
+                    ) : (
+                      <span className="text-slate-600 text-[11px]">—</span>
+                    )}
+                  </td>
+
                   {/* Context Window */}
                   <td className="py-3.5 px-3 font-mono text-slate-300">
                     <div className="flex flex-col">
@@ -367,12 +405,12 @@ export function CostMatrix({
       )}
 
       {/* Footnote on Pricing Accuracy */}
-      <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-500">
+      <div className="mt-4 pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[11px] text-slate-500">
         <div className="flex items-center gap-1.5">
-          <Info className="w-3.5 h-3.5 text-slate-400" />
-          <span>Click any row to select as the benchmark context window model.</span>
+          <Info className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+          <span>Click any row to select as the benchmark context window model. AA Index from Artificial Analysis.</span>
         </div>
-        <span>Official standard API tiers without batch discounts</span>
+        <span>Representative first-party / API configurations</span>
       </div>
     </div>
   );

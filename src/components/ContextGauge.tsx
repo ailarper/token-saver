@@ -183,7 +183,7 @@ export function ContextGauge({
             </p>
             <p className="text-rose-300/90 mt-0.5">
               Your prompt has {inputTokens.toLocaleString()} tokens, exceeding {selectedModel.name}&apos;s limit of {maxContext.toLocaleString()} tokens. 
-              The provider will reject the request or truncate critical instructions. Consider switching to Gemini 2.0 Flash (1M) or Gemini 1.5 Pro (2M).
+              The provider will reject the request or truncate critical instructions. Consider switching to a 1M-token context model like Claude Opus 5.5, Claude Sonnet 5.5, Gemini 4 Argon, or DeepSeek V4.1 Flash.
             </p>
           </div>
         </div>

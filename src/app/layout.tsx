@@ -15,14 +15,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'TokenSaver — AI Token Counter, Context Window & API Cost Planner',
   description:
-    'Ultra-fast, 100% client-side AI token counter, context window visualizer, and API pricing planner for GPT-4o, Claude 3.7, Gemini 2.0 Flash, and DeepSeek-R1. Zero telemetry, zero cloud calls.',
+    'Ultra-fast, 100% client-side AI token counter, context window visualizer, and API pricing planner for Claude Opus 5.5, GPT-6 Astra, Gemini 4 Argon, Grok 4.7, and DeepSeek V4.1 Flash. Zero telemetry, zero cloud calls.',
   keywords: [
     'AI token counter',
     'LLM token calculator',
-    'OpenAI token cost',
-    'Claude 3.7 Sonnet pricing',
-    'DeepSeek R1 cost calculator',
-    'Gemini 2.0 Flash context window',
+    'GPT-6 Astra pricing',
+    'Claude Opus 5.5 pricing',
+    'DeepSeek V4.1 Flash cost',
+    'Gemini 4 Argon context window',
+    'Grok 4.7 pricing',
     'tiktoken online',
     'AI API cost planner',
     'tokens to words converter',
@@ -121,7 +122,7 @@ const jsonLdSchema = {
           name: 'Which AI model currently has the cheapest API?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Gemini 2.0 Flash ($0.10/1M input, $0.40/1M output), DeepSeek-V3 ($0.14/1M input, $0.28/1M output), and GPT-4o mini ($0.15/1M input, $0.60/1M output) are current market price leaders.',
+            text: 'On the Artificial Analysis leaderboard, DeepSeek V4.1 Flash ($0.30/1M input, $1.20/1M output) and MiMo-V2.6-Pro ($0.43/1M input, $0.87/1M output) are leading open-weights price-to-performance models.',
           },
         },
         {
